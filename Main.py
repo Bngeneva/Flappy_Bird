@@ -1,4 +1,5 @@
 import random, pygame, sys
+from pygame import mixer
 from pygame.locals import *
 from Dragon_Class import Dragon
 from Rock_Class import Rock
@@ -23,7 +24,7 @@ gapSize = 200
 loopCount = 0
 
 def lose():
-    font = pygame.font.SysFont(Pacifico, 70)
+    font = pygame.font.SysFont(None, 70)
     text = font.render("Your Dragon has been knocked out!", True, (255, 255, 255))
     text_rect = text.get_rect()
     text_rect.center = (width/2, height/2)
@@ -32,11 +33,13 @@ def lose():
         screen.blit(text, text_rect)
         pygame.display.flip()
         for event in pygame.event.get():
-            if event.key == pygame.KEYDOWN:
+            if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     rocks.empty()
                     player.reset(startPos)
                     return
+
+
 
 def main():
     global loopCount
@@ -49,8 +52,9 @@ def main():
             if event.type == pygame.QUIT:
                 sys.exit()
             if event.type == pygame.KEYDOWN:
-                if event.type == pygame.K_SPACE:
+                if event.key == pygame.K_SPACE:
                     player.speed[1] = -10
+
         player.update()
         rocks.update()
         collision = pygame.sprite.spritecollide(player, rocks, False) or player.rect.center[1] > height
@@ -61,9 +65,14 @@ def main():
         loopCount += 1
 
         if collision:
-            lose()
+                break
+                lose()
+
 
 if __name__ == '__main__':
+    mixer.init()
+    pygame.mixer.music.load('Flappy_Bird_Music.mp3')
+    pygame.mixer.music.play(-1)
     main()
 
 

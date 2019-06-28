@@ -4,8 +4,8 @@ class Rock(pygame.sprite.Sprite):
 
     def __init__(self, pos, isTop = False):
         super().__init__()
-        self.image = pygame.image.load("Flappy_Bird_Stalactite.png")
-        self.image = pygame.transform.smoothscale(self.image, (100, 800))
+        self.image = pygame.image.load("Flappy_Bird_Stalagtite.png")
+        self.image = pygame.transform.smoothscale(self.image, (300, 800))
         if isTop:
             self.image = pygame.transform.rotate(self.image, -180)
         self.rect = self.image.get_rect()
